@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>About Me</title>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+        <script src="https://unpkg.com/@citizenfx/three@0.100.0/build/three.min.js"></script>
+        <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v6.3.0/css/pro.min.css" />
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+        <script src="https://connect.soundcloud.com/sdk/sdk-3.3.2.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+            .bg-style {
+                border-color: var(--border-color);
+                border-radius: 0.75rem;
+                border-width: 1px;
+                background-color: var(--box-color);
+                --tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+                --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+                box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+                --tw-backdrop-blur: blur(40px);
+                backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity)
+                    var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+            }
+
+            .glow {
+                filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+            }
+
+            .font {
+                font-family: "Montserrat", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: 400;
+                font-style: normal;
+            }
+
+            @keyframes fadePage {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            .fade-in {
+                animation: fadePage 0.5s ease-in-out;
+            }
+
+            .fade-out {
+                animation: fadePage 0.5s ease-in-out reverse;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="page absolute p-0 w-full h-full left-0 top-0">
+            <div class="flex flex-col justify-center items-center bg-cover bg-center bg-no-repeat w-full h-full overflow-hidden" :style="{ backgroundImage: 'url(' + info['stuff']['backgroundImage'] + ')' }">
+                <div @click="display()" class="cursor-pointer flex flex-col justify-center items-center bg-cover bg-center bg-no-repeat w-screen h-screen text-white text-2xl font-bold fade-in" :style="{ backgroundImage: 'url(' + info['stuff']['backgroundImage'] + ')' }" v-if="!info['stuff']['active'] && !this.info.stuff.loading">
+                    <p class="fade-in-hard glow">Click To Continue</p>
+                </div>
+    
+                <div class="flex justify-center items-center" v-if="info.stuff.loading && !info['stuff']['active']">
+                    <p class="text-white text-2xl font-bold">Loading Information...</p>
+                </div>
+    
+                <div class="flex justify-center items-center" v-if="info.stuff.loading && !info['stuff']['active'] && info['data']['error']">
+                    <p class="text-white text-2xl font-bold">Oops, we got a error, please wait a moment before trying again...</p>
+                </div>
+    
+                <div class="flex flex-col gap-3 p-6 lg:p-0 fade-in" v-if="info['stuff']['active']">
+                    <div class="border rounded-xl bg-style border-white/10 text-white w-full max-w-md sm:scale-100 scale-95">
+                    <div class="flex">
+                            <img
+                                v-if="info.data.banner.image"
+                                alt="Banner"
+                                :src="info.data.banner.image"
+                                draggable="false"
+                                loading="lazy"
+                                decoding="async"
+                                data-nimg="1"
+                                class="h-40 w-full rounded-t-xl border-b"
+                                style="color: transparent;"
+                            />
+    
+                            <div v-else :style="{ backgroundColor: info.data.banner.color }" class="h-36 w-full lg:w-[50rem] sm:w-full rounded-t-xl" style="color: transparent;"></div>
+                        </div>
+    
+                        <div class="space-y-8 text-center -mt-14 false">
+                            <div class="flex items-center justify-center flex-col gap-2">
+                                <div class="relative -m-2">
+                                    <img alt="Avatar" :src="info.data.avatar" draggable="false" loading="lazy" width="104" height="104" decoding="async" data-nimg="1" class="border-color m-2 aspect-square w-28 rounded-full false" />
+                                </div>
+    
+                                <div class="flex flex-col gap-4 mb-5">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <div class="text-2xl text-center glow bg-[url(https://r2.fakecrime.bio/assets/sparkles/white.gif)]">{{ info['data']['username'] }}</div>
+                                        <div class="text-sm text-center glow">Qualified KKK Member</div>
+                                    </div>
+    
+                                    <div class="px-44 h-[0.2px] shadow-lg bg-white text-white"></div>
+    
+                                    <div class="flex flex-col">
+                                        <div class="text-center inline text-white glow">Listening to: Nothing</div>
+                                        <div class="text-center inline text-white glow">By: N/A</div>
+                                    </div>
+    
+                                    <div class="px-44 h-[0.2px] shadow-lg bg-white text-white"></div>
+    
+                                    <div class="flex justify-center items-center flex-row mt-3 gap-5 glow ml-1">
+                                        <div class="scale-[1.4] flex justify-center cursor-pointer" @click="displayTab('discord')">
+                                            <i class="glow fa-brands fa-discord"></i>
+                                        </div>
+    
+                                        <div class="scale-150 flex justify-center cursor-pointer" @click="displayTab('github')">
+                                            <i class="glow fa-brands fa-github"></i>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                 <div v-for="server in info.data.servers" :key="server.name" class="p-2 rounded-xl bg-white/10 border border-white/10 flex items-center gap-4 w-5/6 mb-2 truncate">
+                                    <img :src="server.icon" alt="Server Icon" class="w-20 h-20 border-none rounded-xl" />
+    
+                                    <div class="flex flex-col flex-1 truncate">
+                                        <h1 class="text-lg font-bold text-start max-w-48">{{ server.name }}</h1>
+    
+                                        <div class="flex flex-col gap-2">
+                                            <div class="flex flex-row items-center gap-2">
+                                                <div class="aspect-square text-white size-2 rounded-full bg-stone-400"></div>
+                                                <div class='glow'>Members: {{ server.offline }}</div>
+                                            </div>
+    
+                                            <div class="flex flex-row items-center gap-2">
+                                                <div class="aspect-square text-white size-2 rounded-full bg-green-400"></div>
+                                                <div class='glow'>Online: {{ server.online }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="flex flex-col items-center justify-end text-pretty">
+                                        <button
+                                            class="cursor-pointer flex justify-center items-center bg-white/10 border border-white/10 rounded-xl p-4 text-center outline-none"
+                                            @click="joinServer(server.invite)"
+                                            disabled={!server.invite}
+                                            aria-label="Join Server"
+                                        >
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <script>
+            Vue.filter("formatnum", (x) => {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            });
+        </script>
+    
+        <script src="main.js"></script>
+    </body>
+</html>
