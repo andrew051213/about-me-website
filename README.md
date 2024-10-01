@@ -1,1 +1,1 @@
-# simple-about-me-website
+This is a simple website I created a while ago, inspired by a design I came across. It's built using pure HTML for the structure and Vue.js for the JavaScript functionality. Almost everything is automatic, but if you want to use it, you'll need to change the invite URLs and the owner ID in the main.js file. While there are a few bugs, I no longer use or maintain it.
