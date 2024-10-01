@@ -174,9 +174,7 @@ const info = new Vue({
 
                     description: data['description'],
 
-                    servers: Array['isArray'](servers) ? servers['map'](server => {
-                        console.log(server);
-                        
+                    servers: Array['isArray'](servers) ? servers['map'](server => {                        
                         return {
                             invite: server['code'] || null,
                             icon: `https://cdn.discordapp.com/icons/${server['guild']['id']}/${server['guild']['icon']}`,
