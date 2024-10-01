@@ -6,10 +6,10 @@ const info = new Vue({
                 active: false,
                 loading: false,
                 checking: false,
-                ownerDiscordId: "651476767332237343",
+                ownerDiscordId: "483360410062422039",
                 backgroundImage: "https://i.pinimg.com/originals/80/8b/ac/808bac097a1fb99f766ef32c8315bd9f.gif",
-                github: "https://github.com/dqrkles",
-                ownedServers: [{ invite: "rjJUPF4Bq5" }, { invite: "redengine" }],
+                github: "https://github.com/andrew051213",
+                ownedServers: [{ invite: "33W8brVnxH" }, { invite: "novaac" }],
             },
 
             data: {
@@ -35,6 +35,7 @@ const info = new Vue({
         async fetchUrlWithProxy(link) {
             if (typeof link !== 'string') {
                 this.info.data.error = true;
+				
                 return console.error('Link is not a string.');
             }
 
@@ -61,9 +62,7 @@ const info = new Vue({
             }
         },
 
-        async display() {
-            console.log('Hello, World!');
-            
+        async display() {            
             try {
                 this.getDiscordInfoForOwner();
 
